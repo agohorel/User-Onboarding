@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -7,13 +7,13 @@ const SignUpForm = ({
   values: { name, email, password, tos },
   errors,
   touched,
-  status
+  status,
+  members,
+  setMembers
 }) => {
-  const [members, setMembers] = useState([]);
-
   useEffect(() => {
-    status && setMembers([...members, status]);
-  }, [status, members]);
+    status && setMembers(members => [...members, status]);
+  }, [status, setMembers]);
 
   return (
     <Form>
