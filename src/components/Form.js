@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import styled from "styled-components";
 
 const SignUpForm = ({
   values: { name, email, password, tos },
@@ -16,33 +17,49 @@ const SignUpForm = ({
   }, [status, setMembers]);
 
   return (
-    <Form>
+    <StyledFormik>
       <label htmlFor="name">
-        Name:
-        <Field type="text" name="name"></Field>
+        <FormGroup>
+          Name:
+          <Field type="text" name="name"></Field>
+          {touched.name && errors.name && (
+            <ValidationWarning>{errors.name}</ValidationWarning>
+          )}
+        </FormGroup>
       </label>
-      {touched.name && errors.name && <p>{errors.name}</p>}
 
       <label htmlFor="email">
-        email:
-        <Field type="text" name="email"></Field>
+        <FormGroup>
+          Email:
+          <Field type="text" name="email"></Field>
+          {touched.email && errors.email && (
+            <ValidationWarning>{errors.email}</ValidationWarning>
+          )}
+        </FormGroup>
       </label>
-      {touched.email && errors.email && <p>{errors.email}</p>}
 
       <label htmlFor="password">
-        password:
-        <Field type="password" name="password"></Field>
+        <FormGroup>
+          Password:
+          <Field type="password" name="password"></Field>
+          {touched.password && errors.password && (
+            <ValidationWarning>{errors.password}</ValidationWarning>
+          )}
+        </FormGroup>
       </label>
-      {touched.password && errors.password && <p>{errors.password}</p>}
 
       <label htmlFor="tos">
-        Terms of Service:
-        <Field type="checkbox" name="tos"></Field>
+        <FormGroup>
+          Terms of Service:
+          <Field type="checkbox" name="tos"></Field>
+          {touched.tos && errors.tos && (
+            <ValidationWarning>{errors.tos}</ValidationWarning>
+          )}
+        </FormGroup>
       </label>
-      {touched.tos && errors.tos && <p>{errors.tos}</p>}
 
-      <button type="submit">Sign Up!</button>
-    </Form>
+      <Button type="submit">Sign Up!</Button>
+    </StyledFormik>
   );
 };
 
@@ -88,3 +105,49 @@ const RegisterForm = withFormik({
 })(SignUpForm);
 
 export default RegisterForm;
+
+const StyledFormik = styled(Form)`
+  display: flex;
+  justify-content: space-between;
+  background-color: black;
+  padding: 2rem 10%;
+  box-shadow: 0px 0px 10px black;
+
+  label {
+    font-size: 1.4rem;
+    color: #aaa;
+  }
+
+  input {
+    background-color: #272629;
+    border: none;
+    border-radius: 3px;
+    padding: 0.5rem;
+    color: #aaa;
+  }
+`;
+
+const FormGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Button = styled.button`
+  border: none;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+  background-color: #272629;
+  color: #aaa;
+  height: 4rem;
+`;
+
+const ValidationWarning = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  background-color: #d90d21;
+  padding: 1rem;
+  border-radius: 3px;
+  color: black;
+`;
