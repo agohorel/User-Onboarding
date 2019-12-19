@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from "styled-components";
 
-export const Card = ({member: {name, email}}) => {
+export const Card = ({member: {name, email, role}}) => {
     return (
         <CardContainer>
             <h2>{name}</h2>
-            <h3>{email}</h3>
+            <h4>{email}</h4>
+            <h3>{role}</h3>
         </CardContainer>
     )
 }
@@ -21,7 +22,7 @@ const CardContainer = styled.div`
     width: calc(50% - 2rem);
     margin: 1rem;
 
-    h2, h3 {
+    h2, h3, h4 {
         color: white;
         margin: 1rem;
     }
@@ -32,5 +33,10 @@ const CardContainer = styled.div`
 
     h3 {
         font-size: 32px;
+    }
+
+    h4 {
+        font-size: 24px;
+        margin: 0;
     }
 `

@@ -5,7 +5,7 @@ import axios from "axios";
 import styled from "styled-components";
 
 const SignUpForm = ({
-  values: { name, email, password, tos },
+  values: { name, email, password, role, tos },
   errors,
   touched,
   status,
@@ -48,6 +48,21 @@ const SignUpForm = ({
         </FormGroup>
       </label>
 
+      <label htmlFor="role">
+        <FormGroup>
+          Role:
+          <Field as="select" name="role">
+            <option value="Front-End Developer">Front-End Dev</option>
+            <option value="Back-End Developer">Back-End Dev</option>
+            <option value="Full-Stack Developer">Full-Stack Dev</option>
+            <option value="None">None</option>
+          </Field>
+          {touched.role && errors.role && (
+            <ValidationWarning>{errors.role}</ValidationWarning>
+          )}
+        </FormGroup>
+      </label>
+
       <label htmlFor="tos">
         <FormGroup>
           Terms of Service:
@@ -64,11 +79,12 @@ const SignUpForm = ({
 };
 
 const RegisterForm = withFormik({
-  mapPropsToValues({ name, email, password, tos }) {
+  mapPropsToValues({ name, email, password, role, tos }) {
     return {
       name: name || "",
       email: email || "",
       password: password || "",
+      role: role || "",
       tos: false || ""
     };
   },
@@ -84,6 +100,12 @@ const RegisterForm = withFormik({
       .min(
         6,
         "For security purposes, please enter a password longer than 5 characters"
+      ),
+    role: Yup.string()
+      .required("Please select a role.")
+      .notOneOf(
+        ["None"],
+        "Sorry but this site is intended for developers only :*("
       ),
     tos: Yup.boolean()
       .required(
