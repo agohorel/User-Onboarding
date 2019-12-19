@@ -98,7 +98,8 @@ const RegisterForm = withFormik({
       .min(3, "Your name must be 3 or more characters long."),
     email: Yup.string()
       .required("An email address is required for registration.")
-      .email("Please enter a valid email address"),
+      .email("Please enter a valid email address")
+      .notOneOf(["waffle@syrup.com"], "Sorry, that email is already taken!"),
     password: Yup.string()
       .required("You must provide a password!")
       .min(
