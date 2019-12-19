@@ -51,12 +51,12 @@ const SignUpForm = ({
       <label htmlFor="role">
         <FormGroup>
           Role:
-          <Field as="select" name="role">
+          <RoleSelector as="select" name="role">
             <option value="Front-End Developer">Front-End Dev</option>
             <option value="Back-End Developer">Back-End Dev</option>
             <option value="Full-Stack Developer">Full-Stack Dev</option>
             <option value="None">None</option>
-          </Field>
+          </RoleSelector>
           {touched.role && errors.role && (
             <ValidationWarning>{errors.role}</ValidationWarning>
           )}
@@ -66,7 +66,11 @@ const SignUpForm = ({
       <label htmlFor="tos">
         <FormGroup>
           Terms of Service:
-          <Field type="checkbox" name="tos"></Field>
+          <Field
+            type="checkbox"
+            name="tos"
+            style={{ marginTop: "5px" }}
+          ></Field>
           {touched.tos && errors.tos && (
             <ValidationWarning>{errors.tos}</ValidationWarning>
           )}
@@ -172,4 +176,12 @@ const ValidationWarning = styled.div`
   padding: 1rem;
   border-radius: 3px;
   color: black;
+`;
+
+const RoleSelector = styled(Field)`
+  background-color: #272629;
+  color: #aaa;
+  border: none;
+  border-radius: 3px;
+  padding: 0.5rem;
 `;
