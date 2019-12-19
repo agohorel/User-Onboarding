@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 const SignUpForm = ({
   values: { name, email, password, tos },
@@ -8,6 +9,12 @@ const SignUpForm = ({
   touched,
   status
 }) => {
+  const [members, setMembers] = useState([]);
+
+  useEffect(() => {
+    status && setMembers([...members, status]);
+  }, [status, members]);
+
   return (
     <Form>
       <label htmlFor="name">
@@ -69,7 +76,15 @@ const RegisterForm = withFormik({
         [true],
         "You must agree to the Terms of Service to proceed with registration."
       )
-  })
+  }),
+  async handleSubmit(values, { setStatus }) {
+    try {
+      const res = await axios.post("https://reqres.in/api/users", values);
+      setStatus(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 })(SignUpForm);
 
 export default RegisterForm;
